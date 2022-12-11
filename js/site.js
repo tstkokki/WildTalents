@@ -3,6 +3,7 @@ $().ready(() => {
     $("#dmgForm")
     .append(GenerateSlider("LAR", "LAR"))
     .append(GenerateSlider("HAR", "HAR"))
+    .append(GenerateSlider("Attacks", "Attacks"))
         .append(GeneratioRadio("Deadly", [{label:"Deadly +1", id:"DeadlyOne"}, {label:"Deadly +2", id:"DeadlyTwo"}]))
         .append(GenerateSlider("Penetration", "Penetration"))
         .append(GenerateSlider("Area", "Area"))
@@ -11,7 +12,7 @@ $().ready(() => {
         .append(GenerateSlider("Electrocuting", "Electrocuting"))
         .append(GenerateSlider("Engulf", "Engulf"))
         .append(GenerateSlider("Go First", "GoFirst"))
-        .append(`<button class="btn btn-danger">Calc DMG`)
+        .append(`<br><button class="btn btn-danger">Calc DMG`)
 
     $("form#diceRollerForm").on("submit", (e) => {
         e.preventDefault();

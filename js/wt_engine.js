@@ -79,8 +79,8 @@ function FormDamageResult(formData) {
   
     let shockDmg = shock != -1 ? width : 0;
     let killingDmg = killing != -1 ? width : 0;
-    let deadly;
-    let extras = {Extras: "Any"};
+    let penetration;
+    let attacks;
 
     formData.forEach(element => {
         if(element.value > 0){
@@ -92,6 +92,13 @@ function FormDamageResult(formData) {
                 case "HAR":
                     person.Armor.HAR = element.value;
                     break;
+                case "Attacks":
+                    attacks = element.value;
+                    break;
+                case "Penetration":
+                    penetration = element.value;
+                    break;
+                    //if Penetration: reduce the target's armor rating in width
                 case "Deadly":
                     if(element.value == 1){
                         let bonus = shockDmg;
@@ -190,6 +197,7 @@ function FormDamageResult(formData) {
         let location = locations[height]
         return location;
     }
+    
     function IndexOfChar(input, char) {
       return input.indexOf(char);
     }
