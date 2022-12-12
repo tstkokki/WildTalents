@@ -19,15 +19,18 @@ const person = {
         LAR: 0, HAR:0
     },
     ReduceDamage: function(lar){
-        this.HitLocations.forEach(h => {
-            h.Dmg.Shock = h.Dmg.Shock > 0 ? 1 : 0;
-            if(h.Dmg.Killing > 0){
-                let remainder = Math.max(h.Dmg.Killing - lar, 0);
-                let reduction = h.Dmg.Killing - remainder;
-                h.Dmg.Killing = remainder;
-                h.Dmg.Shock += reduction;
-            }
-        });
+        if(lar > 0){
+
+            this.HitLocations.forEach(h => {
+                h.Dmg.Shock = h.Dmg.Shock > 0 ? 1 : 0;
+                if(h.Dmg.Killing > 0){
+                    let remainder = Math.max(h.Dmg.Killing - lar, 0);
+                    let reduction = h.Dmg.Killing - remainder;
+                    h.Dmg.Killing = remainder;
+                    h.Dmg.Shock += reduction;
+                }
+            });
+        }
     },
     ApplyDamage: function(location, type, amount){
         this.HitLocations.forEach(h => {
@@ -177,7 +180,7 @@ function FormDamageResult(formData) {
 
     person.ReduceDamage(person.Armor.LAR);
 
-    $(".roll-table").append(`<tr> <td>${person.GetDamageReport()}`);
+    $(".roll-table").prepend(`<tr> <td>${person.GetDamageReport()}`);
     person.Reset();
   
     
