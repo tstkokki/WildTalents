@@ -1,5 +1,7 @@
 
-
+legend{
+    font-size: 1.25rem;
+}
 
 .w-sm{
     width: 4rem;
@@ -10,3 +12,4 @@
 .mh-2rem{
     max-height: 2rem;
 }
+

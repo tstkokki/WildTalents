@@ -1,6 +1,6 @@
 $().ready(() => {
 
-    $("#dmgForm")
+    $("#dmgForm div.form-group").empty()
     .append(GenerateSlider("LAR", "LAR"))
     .append(GenerateSlider("HAR", "HAR"))
     .append(GenerateSlider("Attacks", "Attacks"))
@@ -11,8 +11,7 @@ $().ready(() => {
         .append(GenerateSlider("Daze", "Daze"))
         .append(GenerateSlider("Electrocuting", "Electrocuting"))
         .append(GenerateSlider("Engulf", "Engulf"))
-        .append(GenerateSlider("Go First", "GoFirst"))
-        .append(`<br><button class="btn btn-danger">Calc DMG`)
+        .append(GenerateSlider("Go First", "GoFirst"));
 
     $("form#diceRollerForm").on("submit", (e) => {
         e.preventDefault();
@@ -26,6 +25,7 @@ $().ready(() => {
     $("form#dmgForm").on("submit", (e) => {
         e.preventDefault();
         let formData = $("form#dmgForm").serializeArray();
+        
         FormDamageResult(formData);
 
     })
