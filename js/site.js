@@ -6,11 +6,11 @@ $().ready(() => {
     .append(GenerateSlider("Attacks", "Attacks"))
         .append(GeneratioRadio("Deadly", [{label:"Deadly +1", id:"DeadlyOne"}, {label:"Deadly +2", id:"DeadlyTwo"}]))
         .append(GenerateSlider("Penetration", "Penetration"))
-        .append(GenerateSlider("Area", "Area"))
-        .append(GenerateSlider("Burn", "Burn"))
+        .append(GenerateSlider("Area", "Area") + "<br>")
+        .append(GenerateCheckBox("Burn"))
         //.append(GenerateSlider("Daze", "Daze"))
-        .append(GenerateSlider("Electrocuting", "Electrocuting"))
-        .append(GenerateSlider("Engulf", "Engulf"))
+        .append(GenerateCheckBox("Electrocuting"))
+        .append(GenerateCheckBox("Engulf"))
         //.append(GenerateSlider("Go First", "GoFirst"));
 
     $("form#diceRollerForm").on("submit", (e) => {
@@ -41,6 +41,7 @@ $().ready(() => {
     $("form#dmgForm").on("submit", (e) => {
         e.preventDefault();
         let formData = $("form#dmgForm").serializeArray();
+        console.log(formData);
         FormDamageResult(formData);
     })
     
@@ -62,6 +63,15 @@ function GenerateSlider(label, id){
     <span data-currentvalue="${id}">0</span><br>
     <input type="range" min="0" max="10" value="0" name="${id}" class="btn btn-outline-light w-sm p-0">
 </div>`
+}
+
+function GenerateCheckBox(name){
+    return `<div class="form-check form-check-inline">
+    <input class="form-check-input" type="checkbox" value="1" name="${name}" id="${name}">
+    <label class="form-check-label text-light" for="${name}">
+      ${name}
+    </label>
+  </div>`
 }
 
 function GeneratioRadio(name, labelsAndIds){

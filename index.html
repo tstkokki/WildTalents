@@ -12,16 +12,18 @@
             </div>
             <div class="row shadow p-2">
                 <form class="form" id="diceRollerForm">
-                        <label class="form-label text-light">Format: 1d20</label><br>
-                            <input class="input" id="diceInput" type="text">
-                            <button class="btn btn-primary">Roll</button>
+                    <label class="form-label text-light">Format: 1d20</label><br>
+                    <div class="input-group">
+                        <input class="input form-control" id="diceInput" type="text">
+                        <button class="btn btn-primary">Roll</button>
+                    </div>
                 </form>
             </div>
             <div class="row shadow p-2">
+                <label class="form-label text-light">Format: 1w SK 2h (0 = head)</label><br>
                 <form class="form-inline" id="dmgForm">
-                    <div class="mb-1">
-                        <label class="form-label text-light">Format: 1w SK 2h (0 = head)</label><br>
-                            <input class="input" id="dmgInput" type="text">
+                    <div class="mb-1 input-group">
+                            <input class="input form-control" id="dmgInput" type="text">
                             <button class="btn btn-danger">Calc DMG</button>
                             <button class="btn btn-secondary" id="ResetButton">Reset</button>
                     </div>

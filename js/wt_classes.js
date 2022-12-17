@@ -180,5 +180,14 @@ const Extras = {
     InvokePenetration: function(){
         
         //if Penetration: reduce the target's armor rating in width
+    },
+    Reset: function(){
+        this.Attacks= 0;
+        this.Penetration= 0;
+        this.Area= 0;
+        this.Deadly= 0;
+        this.Engulf= 0;
+        this.Burn= 0;
+        this.Electrocuting= 0;
     }
 }

@@ -61,6 +61,7 @@ function FormDamageResult(formData) {
 
     DisplayResult(person.GetDamageReport())
     person.Reset();
+    Extras.Reset();
     
     function DisplayResult(content){
         let today = new Date();
