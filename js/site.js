@@ -41,13 +41,18 @@ $().ready(() => {
     $("form#dmgForm").on("submit", (e) => {
         e.preventDefault();
         let formData = $("form#dmgForm").serializeArray();
-        
         FormDamageResult(formData);
-
     })
-
+    
     $(document).on("change", "input[type='range']", (e)=>{
       $(e.target).siblings("span[data-currentvalue]").html("+"+$(e.target).val())
+    }).on("reset", "form", (e)=>{
+      $("span[data-currentvalue]").html(0)
+    })
+    
+    $("#ResetButton").on("click", (e)=> {
+      e.preventDefault();
+      document.getElementById("dmgForm").reset();
     })
 });
 
