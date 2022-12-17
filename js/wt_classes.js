@@ -8,7 +8,23 @@ const locations = ["Head",
 const Roll = {
     Width: 0,
     ShockWidth: 0,
-    KillingWidth: 0
+    KillingWidth: 0,
+    Height: 0
+}
+
+const Styles = {
+    WrapInShock: function(input){
+        return `<span class="text-warning fw-bold">${input}</span>`
+    },
+    WrapInKilling: function(input){
+        return `<span class="text-danger fw-bold">${input}</span>`
+    },
+    WrapInLocation: function(input){
+        return `<span class="text-primary fw-bold">${input}</span>`
+    },
+    WrapInSuccess: function(input){
+        return `<span class="text-success fw-bold">${input}</span>`
+    }
 }
 
 const person = {
@@ -70,8 +86,8 @@ const person = {
     GetDamageReport: function(){
         let report = "";
         this.HitLocations.forEach(h => {
-            if(h.Dmg.Shock > 0) report += `${h.Dmg.Shock} points of Shocking to the ${h.Name}<br>`;
-            if(h.Dmg.Killing > 0) report += `${h.Dmg.Killing} points of Killing to the ${h.Name}<br>`;
+            if(h.Dmg.Shock > 0) report += `${Styles.WrapInShock(h.Dmg.Shock)}</span> points of ${Styles.WrapInShock("Shocking")} to the ${Styles.WrapInLocation(h.Name)}<br>`;
+            if(h.Dmg.Killing > 0) report += `${Styles.WrapInKilling(h.Dmg.Killing)} points of ${Styles.WrapInKilling("Killing")} to the ${Styles.WrapInLocation(h.Name)}<br>`;
         })
         return report;
     }
@@ -86,12 +102,12 @@ const Extras = {
     Burn: 0,
     Electrocuting: 0,
     InvokeDeadly: function(){
-        if(Deadly == 1){
+        if(this.Deadly == 1){
             let bonus = Roll.ShockWidth;
             Roll.ShockWidth = 0 + Roll.KillingWidth;
             Roll.KillingWidth += bonus;
         } 
-        if(Deadly == 2){
+        if(this.Deadly == 2){
             let bonus = Roll.ShockWidth;
             Roll.ShockWidth += Roll.KillingWidth;
             Roll.KillingWidth += bonus;
@@ -100,37 +116,44 @@ const Extras = {
         //if Deadly +2: Shock => Shock and Killing.
     },
     InvokeArea: function(){
-        person.HitLocations.forEach(loc => {
-            person.ApplyShockByName(loc.Name, 2)
-        });
+        if(this.Area > 0){
+            person.HitLocations.forEach(loc => {
+                person.ApplyShockByName(loc.Name, 2)
+            });
+        }
         //-if Area: target and everyone within radius takes 2 Shock to every location. 
         //Each char in the area rolls dice = Area rating. Each die = 1K to rolled location
     },
     InvokeBurn: function(){
-        person.HitLocations.forEach(loc => {
-            if(loc.Name != "Head")
-            person.ApplyShockByName(loc.Name, 1)
-        });
+        if(this.Burn > 0){
+            person.HitLocations.forEach(loc => {
+                if(loc.Name != "Head")
+                person.ApplyShockByName(loc.Name, 1)
+            });
+        }
         //if Burn: every hit location except head takes 1 point of Shocking
     },
     InvokeElectrocuting: function(){
-        let limb = Math.floor(Math.random()*2)+1;
-        if(locations[height] == "Head" || locations[height] == "Right Arm" || locations[height] == "Left Arm"){
-            if(shock != -1){
-                person.ApplyShockByName("Torso", shockDmg)
-                person.ApplyDamage(limb, "Shock", shockDmg)
+        if(this.Electrocuting > 0){
+
+            let limb = Math.floor(Math.random()*2)+1;
+            if(locations[Roll.Height] == "Head" || locations[Roll.Height] == "Right Arm" || locations[Roll.Height] == "Left Arm"){
+                if(Roll.shock > 0){
+                    person.ApplyShockByName("Torso", Roll.ShockWidth)
+                    person.ApplyDamage(limb, "Shock", Roll.ShockWidth)
+                }
+                if(Roll.KillingWidth > 0){
+                    person.ApplyKillingByName("Torso", Roll.KillingWidth)
+                    person.ApplyDamage(limb, "Killing", Roll.KillingWidth)
+                }
             }
-            if(killing != -1){
-                person.ApplyKillingByName("Torso", killingDmg)
-                person.ApplyDamage(limb, "Killing", shockDmg)
-            }
-        }
-        if(locations[height] == "Torso"){
-            if(shock != -1){
-                person.ApplyDamage(limb, "Shock", shockDmg)
-            }
-            if(killing != -1){
-                person.ApplyDamage(limb, "Killing", shockDmg)
+            if(locations[Roll.Height] == "Torso"){
+                if(Roll.ShockWidth > 0){
+                    person.ApplyDamage(limb, "Shock", Roll.ShockWidth)
+                }
+                if(Roll.KillingWidth > 0){
+                    person.ApplyDamage(limb, "Killing", Roll.ShockWidth)
+                }
             }
         }
         // if Electrocuting: If the attack damages the target—it must inflict at least one point of
@@ -138,14 +161,17 @@ const Extras = {
         // locations as it goes to ground, without requiring you to make any more rolls.
     },
     InvokeEngulf: function(){
-        person.HitLocations.forEach(loc => {
-            if(shock != -1){
-                person.ApplyShockByName(loc.Name, shockDmg)
-            }
-            if(killing != -1){
-                person.ApplyKillingByName(loc.Name, killingDmg)
-            }
-        })
+        if(this.Engulf > 0){
+
+            person.HitLocations.forEach(loc => {
+                if(Roll.ShockWidth > 0){
+                    person.ApplyShockByName(loc.Name, Roll.ShockWidth)
+                }
+                if(Roll.KillingWidth > 0){
+                    person.ApplyKillingByName(loc.Name, Roll.KillingWidth)
+                }
+            });
+        }
         //if Engulf: applies to every hit location
     },
     InvokePenetration: function(){

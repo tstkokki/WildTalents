@@ -43,15 +43,21 @@ function FormDamageResult(formData) {
     Roll.Width = width - Math.max(person.Armor.HAR - Extras.Penetration, 0);
     Roll.ShockWidth = shock != -1 ? Roll.Width : 0;
     Roll.KillingWidth = killing != -1 ? Roll.Width : 0;
-    console.log(`Width: ${Roll.Width}`)
+    Roll.Height = height;
     if(Roll.Width < 2){
-        DisplayResult("Less than 2 width, no dmg");
+        DisplayResult(`Less than 2 width, ${Styles.WrapInSuccess("0 dmg")}`);
         person.Reset();
         return;
     }
 
-    person.ApplyDamage(height, "Shock", Roll.ShockWidth+Extras.Attacks);
-    person.ApplyDamage(height, "Killing", Roll.KillingWidth+Extras.Attacks);
+    person.ApplyDamage(Roll.Height, "Shock", Roll.ShockWidth+Extras.Attacks);
+    person.ApplyDamage(Roll.Height, "Killing", Roll.KillingWidth+Extras.Attacks);
+
+    Extras.InvokeBurn();
+    Extras.InvokeElectrocuting();
+    Extras.InvokeEngulf();
+    Extras.InvokeArea();
+    Extras.InvokeDeadly();
 
     person.ReduceDamage(person.Armor.LAR);
 
@@ -59,7 +65,9 @@ function FormDamageResult(formData) {
     person.Reset();
     
     function DisplayResult(content){
-        $(".roll-table").prepend(`<tr> <td>${content}`);
+        let today = new Date();
+        let time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+        $(".roll-table").prepend(`<tr> <td>${content}</td><td>${time}</td>`);
     }
     
     function ExtractWidthAndShockAndKilling() {
