@@ -84,7 +84,7 @@ const person = {
         })
     },
     GetDamageReport: function(){
-        let report = "";
+        let report = `${Roll.Width}w ${Roll.ShockWidth > 0?"S":""}${Roll.KillingWidth>0?"K":""} ${Roll.Height}h<br>`;
         this.HitLocations.forEach(h => {
             if(h.Dmg.Shock > 0) report += `${Styles.WrapInShock(h.Dmg.Shock)}</span> points of ${Styles.WrapInShock("Shocking")} to the ${Styles.WrapInLocation(h.Name)}<br>`;
             if(h.Dmg.Killing > 0) report += `${Styles.WrapInKilling(h.Dmg.Killing)} points of ${Styles.WrapInKilling("Killing")} to the ${Styles.WrapInLocation(h.Name)}<br>`;

@@ -19,7 +19,23 @@ $().ready(() => {
         let indexOfDie = roll.indexOf("d");
         let numberOfDice = parseInt(roll.substr(0, indexOfDie));
         let sizeOfDice = parseInt(roll.substr(indexOfDie+1));
-
+        let rolls = [];
+        for(let i = 0; i < numberOfDice; i++){
+          let r = Math.floor(Math.random()*sizeOfDice)+1;
+          r = r == sizeOfDice 
+          ? ` ${Styles.WrapInSuccess(r)}`
+          :r == 1 
+          ? ` ${Styles.WrapInKilling(r)}`
+          :` ${r}`;
+          rolls.push(r);
+        }
+        let today = new Date();
+        let time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+        let content = `Rolling ${numberOfDice}d${sizeOfDice}...<br>Result: ${rolls.toString()}`
+        $(".roll-table").prepend(`<tr> <td>${content}</td><td>${time}</td>`);
+        /*
+        // Returns a random integer from 1 to 10:
+            Math.floor(Math.random() * 10) + 1;*/
         console.log(`rolling ${numberOfDice} dice of size ${sizeOfDice}`);
     });
     $("form#dmgForm").on("submit", (e) => {
