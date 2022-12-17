@@ -27,8 +27,6 @@ function FormDamageResult(formData) {
             case "Burn":
                 Extras.Burn = parseInt(element.value);
                 break;
-            case "Daze":
-                break;
             case "Electrocuting":
                 Extras.Electrocuting = parseInt(element.value);
                 break;

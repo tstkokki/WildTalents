@@ -89,6 +89,9 @@ const person = {
             if(h.Dmg.Shock > 0) report += `${Styles.WrapInShock(h.Dmg.Shock)}</span> points of ${Styles.WrapInShock("Shocking")} to the ${Styles.WrapInLocation(h.Name)}<br>`;
             if(h.Dmg.Killing > 0) report += `${Styles.WrapInKilling(h.Dmg.Killing)} points of ${Styles.WrapInKilling("Killing")} to the ${Styles.WrapInLocation(h.Name)}<br>`;
         })
+        if(Extras.Area > 0){
+            report += `Roll ${Extras.Area} ${Extras.Area > 1 ? "dice, each result" : "die, the result"} location taking ${Styles.WrapInKilling("1")} point of ${Styles.WrapInKilling("Killing")}`
+        }
         return report;
     }
 };
@@ -138,7 +141,7 @@ const Extras = {
 
             let limb = Math.floor(Math.random()*2)+1;
             if(locations[Roll.Height] == "Head" || locations[Roll.Height] == "Right Arm" || locations[Roll.Height] == "Left Arm"){
-                if(Roll.shock > 0){
+                if(Roll.ShockWidth > 0){
                     person.ApplyShockByName("Torso", Roll.ShockWidth)
                     person.ApplyDamage(limb, "Shock", Roll.ShockWidth)
                 }

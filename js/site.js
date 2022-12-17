@@ -8,10 +8,10 @@ $().ready(() => {
         .append(GenerateSlider("Penetration", "Penetration"))
         .append(GenerateSlider("Area", "Area"))
         .append(GenerateSlider("Burn", "Burn"))
-        .append(GenerateSlider("Daze", "Daze"))
+        //.append(GenerateSlider("Daze", "Daze"))
         .append(GenerateSlider("Electrocuting", "Electrocuting"))
         .append(GenerateSlider("Engulf", "Engulf"))
-        .append(GenerateSlider("Go First", "GoFirst"));
+        //.append(GenerateSlider("Go First", "GoFirst"));
 
     $("form#diceRollerForm").on("submit", (e) => {
         e.preventDefault();
